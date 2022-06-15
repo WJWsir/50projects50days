@@ -40,6 +40,7 @@ generateEl.addEventListener('click', () => {
 
 function generatePassword(lower, upper, number, symbol, length) {
     let generatedPassword = ''
+    debugger;
     const typesCount = lower + upper + number + symbol
     const typesArr = [{lower}, {upper}, {number}, {symbol}].filter(item => Object.values(item)[0])
     
@@ -47,6 +48,11 @@ function generatePassword(lower, upper, number, symbol, length) {
         return ''
     }
 
+    /**
+     * 并非随机生成单个字符而是规律性生成单个字符
+     * 例如： 小写字母-大写字母-数字|-|小写字母-大写字母-数字|-|小写字母-大写字母-数字
+     * 周期为 typesCount
+     */
     for(let i = 0; i < length; i += typesCount) {
         typesArr.forEach(type => {
             const funcName = Object.keys(type)[0]
