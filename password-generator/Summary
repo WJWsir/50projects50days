@@ -1,0 +1,24 @@
+1. @import url('https://fonts.googleapis.com/css?family=Muli&display=swap'); font-family: 'Muli', sans-serif;
+  当style.css没有该条 statement，元素被渲染的字体不是Muli, sans-serif，而是Microsoft YaHei，参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/@import
+  @import 用于从其他样式表导入样式规则，而且应该写在文件的首部
+2. <input type="number" id="length" min="4" max="20" value="20">
+  当没有为input[type=number]设置min && max属性时，元素显示默认长度
+  当同时为input[type=number]设置min && max属性时，浏览器有趣地根据其中一个最大值渲染长度
+  当为input[type=number]设置value属性时，初始显示值为value值
+  该input为内建 shadow DOM，参考https://zh.javascript.info/shadow-dom#nei-jian-shadowdom
+3. max-width: 100%; width: 350px;
+  一个元素可以同时设置width, max-width两个CSS属性值
+  元素的width可以通过设置超过浏览器视口的宽度
+4. 使用flex实现一列显示多个左右结构的元素
+.options {
+    display: flex;
+    flex-direction: column;
+}
+.options .option {
+    display: flex;
+    justify-content: space-between;
+}
+5. window.innerWidth/ window.innerHeight
+  窗口的完整宽高度，包括滚动条
+  不同于document.documentElement.clientWidth/document.documentElement.clientHeight，不包括滚动条
+  参考https://zh.javascript.info/size-and-scroll-window
