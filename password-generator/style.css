@@ -48,6 +48,24 @@ body {
     justify-content: space-between;
 }
 
+#result {
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1px;
+    /* 文字垂直居中 ref: https://blog.csdn.net/Dzq_Boyka/article/details/54585435 */
+    line-height: 45px;
+    /* 文本滚动展示 */
+    max-width: calc(100% - 45px);
+    word-wrap: break-word;
+    overflow-y: scroll;
+}
+
+#result::-webkit-scrollbar {
+    /* 隐藏滚动条 ref: https://segmentfault.com/a/1190000019710081 */
+    /* display: none; */
+    width: 1rem;
+}
+
 .password button.copy-clipboard {
     padding: 0;
     border: 0;
@@ -60,20 +78,23 @@ body {
 }
 
 .options {
-    color: #ffffff;
     display: flex;
     flex-direction: column;
 }
 
 .options .option {
     padding: 10px 0;
+    color: #ffffff;
     display: flex;
     justify-content: space-between;
 }
 
 .generate {
+    width: 100%;
+    font-size: 16px;
     padding: 10px 0;
     text-align: center;
     background-color: #3b3b98;
     color: #ffffff;
+    cursor: pointer;
 }
