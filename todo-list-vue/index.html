@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css" />
+    <title>TODO LIST</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            todos
+        </div>
+        <div class="main">
+            <div class="first-line">
+                <input type="checkbox" class="toggle-all" v-model="allDone">
+                <input placeholder="What needs to be done?" @keyup.enter="addTodo" v-model="newTodo" class="new-todo" />
+            </div>
+            <ul class="todo-list">
+                <li class="todo-item" :class="{editing : todo == editedTodo}" v-for="(todo, index) in filteredTodos"
+                    :key="index">
+                    <div class="todo-noedit-view">
+                        <input class="todo-item-toggle" type="checkbox" v-model="todo.isCompleted" />
+                        <label class="todo-item-title" :class="{completed : todo.isCompleted}"
+                            @dblclick="editTodo(todo)">{{ todo.textContent }}</label>
+                        <div class="todo-item-remove" @click="deleteTodo(todo.identity)">×</div>
+                    </div>
+
+                    <input class="todo-edit-view" type="text" v-model="todo.textContent"
+                        v-todo-focus="todo == editedTodo" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)"
+                        @keyup.esc="cancelEdit(todo)" />
+                </li>
+            </ul>
+            <div class="last-line">
+                <span class="todo-count">{{ remaining }} items left</span>
+                <!-- <select class="todo-type" v-model="filterType">
+                    <option value="all">All</option>
+                    <option value="active">Active</option>
+                    <option value="completed">Completed</option>
+                </select> -->
+                <ul class="todo-filterType">
+                    <li><a href="#/all" :class="{selected : filterType == 'all'}">All</a></li>
+                    <li><a href="#/active" :class="{selected : filterType == 'active'}">Active</a></li>
+                    <li><a href="#/completed" :class="{selected : filterType == 'completed'}">Completed</a></li>
+                </ul>
+                <span @click="clearCompletedTodos" class="clear-completed" v-show="todos.length - remaining != 0">Clear
+                    completed</span>
+            </div>
+        </div>
+        <div class="footer">
+            <p>
+                Double-click to edit a todo
+            </p>
+            <p>
+                Written by WJWsir
+            </p>
+            <p>
+                Part of TodoMVC
+            </p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="app.js"></script>
+</body>
+
+
+</html>

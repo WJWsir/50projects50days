@@ -1,0 +1,266 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-size: 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wrapper .header {
+    font-size: 80px;
+    font-weight: 200;
+    text-align: center;
+    color: #b83f45;
+
+    margin-bottom: 20px;
+}
+
+.wrapper .main {
+    max-width: 550px;
+    width: 100%;
+
+    /* 好像这个div悬浮了起来 */
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
+
+    position: relative;
+}
+
+.wrapper .main .first-line {
+    width: 100%;
+    margin-bottom: 2px;
+
+    background-color: #ffffff;
+}
+
+.wrapper .main .first-line:focus-within {
+    box-shadow: 0 0 2px 2px #cf7d7d;
+    outline: 0;
+}
+
+.wrapper .main .toggle-all {
+    appearance: none;
+}
+
+.wrapper .main .toggle-all::before {
+    content: '❯';
+    display: inline-block;
+    padding: 10px 27px 10px 27px;
+    font-size: 22px;
+    color: #949494;
+    transform: rotate(90deg);
+}
+
+.wrapper .main .toggle-all:checked::before {
+    color: #484848;
+}
+
+
+.wrapper .main .new-todo {
+    padding: 16px 16px 16px 0;
+    border: none;
+    font-size: 24px;
+    line-height: 1.4em;
+    outline: none;
+}
+
+.wrapper .main .new-todo::placeholder {
+    font-style: italic;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.wrapper .main ul.todo-list {
+    /* 去掉原生html元素ul或ol的左侧列表符号以及左侧符号所占的画面空间 */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper .main ul.todo-list li.todo-item div.todo-noedit-view {
+
+    display: grid;
+    grid-template-columns: 25fr 1fr;
+    grid-template-rows: minmax(auto, auto);
+
+    position: relative;
+
+    font-size: 24px;
+
+    border-bottom: 1px solid #ededed;
+}
+
+.wrapper .main ul.todo-list li.todo-item.editing div.todo-noedit-view {
+    display: none;
+}
+
+.wrapper .main ul.todo-list .todo-item-toggle {
+    position: absolute;
+    /* 很巧妙——垂直居中 */
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+
+    /* 大口径checkbox */
+    width: 40px;
+    height: 40px;
+
+    /* 看我隐身，方便调试 */
+    opacity: 0;
+}
+
+
+.wrapper .main ul.todo-list label.todo-item-title {
+    line-height: 1.2;
+
+    padding: 15px 15px 15px 60px;
+
+    /* CSS选择器以及background-*属性 实现if判断 */
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23949494%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
+    /* 背景图片默认重复显示，不信的话注释看看 */
+    background-repeat: no-repeat;
+    background-position: center left;
+
+    /* 慢慢来 */
+    transition: color 0.4s;
+}
+
+.wrapper .main ul.todo-list .todo-item-toggle:checked+label.todo-item-title {
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%2359A193%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20fill%3D%22%233EA390%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22%2F%3E%3C%2Fsvg%3E');
+}
+
+.wrapper .main ul.todo-list label.todo-item-title.completed {
+    color: #d9d9d9;
+    text-decoration: line-through;
+}
+
+
+
+.wrapper .main ul.todo-list li.todo-item .todo-item-remove {
+    /* 元素垂直居中 */
+    margin: auto 0;
+
+    /* 单行文本垂直居中的技巧：line-height = height, 参考:https://blog.csdn.net/u014607184/article/details/51820508 */
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    /* 文本水平居中 */
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.wrapper .main ul.todo-list li.todo-item .todo-edit-view {
+    font-size: 24px;
+
+    /* 就让text input元素丑陋的边框随border = none而去吧 */
+    border: none;
+    outline: none;
+    box-shadow: 0 0px 2px 2px #cf7d7d,
+        inset 0 -1px 5px 0 rgb(0 0 0 / 20%);
+
+    /* 先隐身，什么时候显示听召唤 */
+    display: none;
+
+    padding: 15px 15px;
+    width: 100%;
+}
+
+.wrapper .main ul.todo-list li.todo-item.editing .todo-edit-view {
+    /* 听到了召唤，是时候现身以供编辑了 */
+    display: block;
+
+    padding: 15px 15px 15px 0px;
+    width: calc(100% - 60px);
+    margin: 0 0 0 60px;
+}
+
+.wrapper .main div.last-line {
+    /* grid 三列布局 */
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+
+    padding: 10px 15px;
+
+    /* 那三个层叠片原来依赖这个CSS属性 */
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+	            0 8px 0 -3px #f6f6f6,
+	            0 9px 1px -3px rgba(0, 0, 0, 0.2),
+	            0 16px 0 -6px #f6f6f6,
+	            0 17px 2px -6px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper .main span.todo-count {
+    text-align: center;
+}
+
+/* 选择框 */
+.wrapper .main select.todo-type {
+    /* 不选时不想看见边框 */
+    border: none;
+    /* 选中时时不想看见轮廓线 */
+    outline: none;
+}
+
+.wrapper .main ul.todo-filterType {
+    /* 同样地，去掉原生html元素ul或ol的样式 */
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.wrapper .main ul.todo-filterType li {
+    /* li元素同行显示 */
+    display: inline;
+
+    margin: 3px;
+}
+
+.wrapper .main ul.todo-filterType li a {
+    /* 去掉原生html元素a的样式 */
+    color: inherit;
+    text-decoration: none;
+
+    /* 美化成按钮，transparent与:hover border-color配合 */
+    border: 1px solid transparent;
+    padding: 3px 7px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.wrapper .main ul.todo-filterType a:hover,
+.wrapper .main ul.todo-filterType a.selected {
+    border-color: #cf7d7d;
+}
+
+.wrapper .main span.clear-completed {
+    text-align: center;
+    cursor: pointer;
+}
+
+.wrapper .footer {
+    font-size: 11px;
+    text-shadow: 0 1px 0 rgb(255 255 255 / 50%);
+    text-align: center;
+    color: #4d4d4d;
+
+    margin: 50px;
+}
