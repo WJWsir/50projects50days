@@ -80,6 +80,7 @@ body {
     font-size: 24px;
     line-height: 1.4em;
     outline: none;
+    width: calc(100% - 150px);
 }
 
 .wrapper .main .new-todo::placeholder {
